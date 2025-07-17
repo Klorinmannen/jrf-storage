@@ -123,10 +123,22 @@ trait Repository
 		return [];
 	}
 
+	/**
+	 * Returns whether to rekey the records with the primary field.
+	 * 
+	 * Default is false.
+	 */
+	public static function rekeyWithPrimaryField(): bool
+	{
+		return false;
+	}
+
 	private static function processRecords(array $records): array
 	{
 		$primaryField = static::primaryField();
-		$records = Util::rekey($records, $primaryField);
+		
+		if (static::rekeyWithPrimaryField())
+			$records = Util::rekey($records, $primaryField);
 
 		$processedRecords = [];
 		foreach ($records as $key => $record) {
