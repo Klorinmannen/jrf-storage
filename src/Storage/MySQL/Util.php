@@ -8,6 +8,20 @@ use Projom\Storage\Util as StorageUtil;
 
 class Util extends StorageUtil
 {
+	public static function format(mixed $value, string $type): mixed
+	{
+		$type = strtolower($type);
+		return match ($type) {
+			'int' => (int) $value,
+			'float' => (float) $value,
+			'bool' => (bool) $value,
+			'date' => date('Y-m-d', strtotime((string) $value)),
+			'datetime' => date('Y-m-d H:i:s', strtotime((string) $value)),
+			'string' => (string) $value,
+			default => $value,
+		};
+	}
+
 	public static function dynamicPrimaryField(string $calledClass, bool $useNamespaceAsTableName): string
 	{
 		$table = static::dynamicTableName($calledClass, $useNamespaceAsTableName);
