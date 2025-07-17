@@ -22,6 +22,59 @@ class Util extends StorageUtil
 		};
 	}
 
+	public static function selectRecordFields(array $record, array $selectFields): array
+	{
+		if (!$selectFields)
+			return $record;
+
+		$modifiedRecord = [];
+		foreach ($selectFields as $field)
+			if (array_key_exists($field, $record))
+				$modifiedRecord[$field] = $record[$field];
+
+		return $modifiedRecord;
+	}
+
+	public static function formatRecord(array $record, array $formatFields): array
+	{
+		if (!$formatFields)
+			return $record;
+
+		foreach ($formatFields as $field => $type) {
+			if (!array_key_exists($field, $record))
+				continue;
+			$value = $record[$field];
+			$record[$field] = static::format($value, $type);
+		}
+
+		return $record;
+	}
+
+	public static function redactRecord(array $record, array $redactedFields, string $redactText): array
+	{
+		if (!$redactedFields)
+			return $record;
+
+		foreach ($redactedFields as $field)
+			if (array_key_exists($field, $record))
+				$record[$field] = $redactText;
+
+		return $record;
+	}
+
+	public static function translateRecordFields(array $record, array $translateFields): array
+	{
+		if (!$translateFields)
+			return $record;
+
+		$translatedRecord = [];
+		foreach ($translateFields as $field => $translatedField)
+			if (array_key_exists($field, $record))
+				$translatedRecord[$translatedField] = $record[$field];
+
+		return $translatedRecord;
+	}
+
 	public static function dynamicPrimaryField(string $calledClass, bool $useNamespaceAsTableName): string
 	{
 		$table = static::dynamicTableName($calledClass, $useNamespaceAsTableName);

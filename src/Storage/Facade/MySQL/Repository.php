@@ -132,67 +132,14 @@ trait Repository
 
 		$processedRecords = [];
 		foreach ($records as $key => $record) {
-			$record = static::selectRecordFields($record);
-			$record = static::formatRecord($record);
-			$record = static::redactRecord($record);
-			$record = static::translateRecordFields($record);
+			$record = Util::selectRecordFields($record, static::selectFields());
+			$record = Util::formatRecord($record, static::formatFields());
+			$record = Util::redactRecord($record, static::redactFields(), static::REDACTED);
+			$record = Util::translateRecordFields($record, static::translateFields());
 			$processedRecords[$key] = $record;
 		}
 
 		return $processedRecords;
-	}
-
-	private static function formatRecord(array $record): array
-	{
-		if (!$formatFields = static::formatFields())
-			return $record;
-
-		foreach ($formatFields as $field => $type) {
-			if (!array_key_exists($field, $record))
-				continue;
-			$value = $record[$field];
-			$record[$field] = Util::format($value, $type);
-		}
-
-		return $record;
-	}
-
-	private static function redactRecord(array $record): array
-	{
-		if (!$redactedFields = static::redactFields())
-			return $record;
-
-		foreach ($redactedFields as $field)
-			if (array_key_exists($field, $record))
-				$record[$field] = static::REDACTED;
-
-		return $record;
-	}
-
-	private static function selectRecordFields(array $record): array
-	{
-		if (!$selectFields = static::selectFields())
-			return $record;
-
-		$modifiedRecord = [];
-		foreach ($selectFields as $field)
-			if (array_key_exists($field, $record))
-				$modifiedRecord[$field] = $record[$field];
-
-		return $modifiedRecord;
-	}
-
-	private static function translateRecordFields(array $record): array
-	{
-		if (!$translateFields = static::translateFields())
-			return $record;
-
-		$translatedRecord = [];
-		foreach ($translateFields as $field => $translatedField)
-			if (array_key_exists($field, $record))
-				$translatedRecord[$translatedField] = $record[$field];
-
-		return $translatedRecord;
 	}
 
 	/**
