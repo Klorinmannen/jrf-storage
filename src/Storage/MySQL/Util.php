@@ -8,7 +8,7 @@ use Projom\Storage\Util as StorageUtil;
 
 class Util extends StorageUtil
 {
-	private const REDACTED = 'REDACTED';
+	private const REDACTED = '__REDACTED__';
 
 	public static function processRecords(array $records, array $options): array
 	{
