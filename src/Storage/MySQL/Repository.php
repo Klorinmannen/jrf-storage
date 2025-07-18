@@ -16,8 +16,6 @@ use Projom\Storage\SQL\Util\Operator;
  */
 trait Repository
 {
-	private const REDACTED = '__REDACTED__';
-
 	private readonly Query $query;
 	private readonly string $table;
 	private readonly string $primaryField;
@@ -124,19 +122,21 @@ trait Repository
 
 	private function processRecords(array $records): array
 	{
-		if ($this->rekeyWithPrimaryField())
-			$records = Util::rekey($records, $this->primaryField);
-
-		$processedRecords = [];
-		foreach ($records as $key => $record) {
-			$record = Util::selectRecordFields($record, $this->selectFields());
-			$record = Util::formatRecord($record, $this->formatFields());
-			$record = Util::redactRecord($record, $this->redactFields(), static::REDACTED);
-			$record = Util::translateRecordFields($record, $this->translateFields());
-			$processedRecords[$key] = $record;
-		}
-
+		$options = $this->processOptions();
+		$processedRecords = Util::processRecords($records, $options);
 		return $processedRecords;
+	}
+
+	private function processOptions(): array
+	{
+		$primaryField = $this->rekeyWithPrimaryField() ? $this->primaryField : '';
+		return [
+			'select_fields' => $this->selectFields(),
+			'format_fields' => $this->formatFields(),
+			'redact_fields' => $this->redactFields(),
+			'translate_fields' => $this->translateFields(),
+			'rekey_with_primary_field' => $primaryField,
+		];
 	}
 
 	/**

@@ -7,19 +7,17 @@ namespace Projom\Storage\Facade\MySQL;
 use Exception;
 
 use Projom\Storage\Facade\MySQL\Query;
+use Projom\Storage\MySQL\Util;
 use Projom\Storage\SQL\Util\Aggregate;
 use Projom\Storage\SQL\Util\Operator;
-use Projom\Storage\MySQL\Util;
 
 /**
  * Static repository - a trait that provides a set of methods to interact with a database table.
  */
 trait Repository
 {
-	private const REDACTED = '__REDACTED__';
-
 	/**
-	 * Invoke / construct the repository.
+	 * Invoke the repository.
 	 */
 	private static function invoke(): string
 	{
@@ -125,21 +123,21 @@ trait Repository
 
 	private static function processRecords(array $records): array
 	{
-		$primaryField = static::primaryField();
-		
-		if (static::rekeyWithPrimaryField())
-			$records = Util::rekey($records, $primaryField);
-
-		$processedRecords = [];
-		foreach ($records as $key => $record) {
-			$record = Util::selectRecordFields($record, static::selectFields());
-			$record = Util::formatRecord($record, static::formatFields());
-			$record = Util::redactRecord($record, static::redactFields(), static::REDACTED);
-			$record = Util::translateRecordFields($record, static::translateFields());
-			$processedRecords[$key] = $record;
-		}
-
+		$options = static::processOptions();
+		$processedRecords = Util::processRecords($records, $options);
 		return $processedRecords;
+	}
+
+	private static function processOptions(): array
+	{
+		$primaryField = static::rekeyWithPrimaryField() ? static::primaryField() : '';
+		return [
+			'select_fields' => static::selectFields(),
+			'format_fields' => static::formatFields(),
+			'redact_fields' => static::redactFields(),
+			'translate_fields' => static::translateFields(),
+			'rekey_with_primary_field' => $primaryField
+		];
 	}
 
 	/**

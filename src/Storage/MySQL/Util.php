@@ -8,18 +8,32 @@ use Projom\Storage\Util as StorageUtil;
 
 class Util extends StorageUtil
 {
-	public static function format(mixed $value, string $type): mixed
+	private const REDACTED = 'REDACTED';
+
+	public static function processRecords(array $records, array $options): array
 	{
-		$type = strtolower($type);
-		return match ($type) {
-			'int' => (int) $value,
-			'float' => (float) $value,
-			'bool' => (bool) $value,
-			'date' => date('Y-m-d', strtotime((string) $value)),
-			'datetime' => date('Y-m-d H:i:s', strtotime((string) $value)),
-			'string' => (string) $value,
-			default => $value,
-		};
+		$processedRecords = [];
+		foreach ($records as $key => $record) {
+
+			if ($selectFields = $options['select_fields'] ?? [])
+				$record = Util::selectRecordFields($record, $selectFields);
+
+			if ($formatFields = $options['format_fields'] ?? [])
+				$record = Util::formatRecord($record, $formatFields);
+
+			if ($redactFields = $options['redact_fields'] ?? [])
+				$record = Util::redactRecord($record, $redactFields, static::REDACTED);
+
+			if ($translateFields = $options['translate_fields'] ?? [])
+				$record = Util::translateRecordFields($record, $translateFields);
+
+			$processedRecords[$key] = $record;
+		}
+
+		if ($primaryField = $options['rekey_with_primary_field'] ?? '')
+			$processedRecords = Util::rekey($processedRecords, $primaryField);
+
+		return $processedRecords;
 	}
 
 	public static function selectRecordFields(array $record, array $selectFields): array
@@ -48,6 +62,20 @@ class Util extends StorageUtil
 		}
 
 		return $record;
+	}
+
+	public static function format(mixed $value, string $type): mixed
+	{
+		$type = strtolower($type);
+		return match ($type) {
+			'int' => (int) $value,
+			'float' => (float) $value,
+			'bool' => (bool) $value,
+			'date' => date('Y-m-d', strtotime((string) $value)),
+			'datetime' => date('Y-m-d H:i:s', strtotime((string) $value)),
+			'string' => (string) $value,
+			default => $value,
+		};
 	}
 
 	public static function redactRecord(array $record, array $redactedFields, string $redactText): array
