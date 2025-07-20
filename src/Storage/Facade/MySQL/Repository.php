@@ -8,6 +8,7 @@ use Exception;
 
 use Projom\Storage\Facade\MySQL\Query;
 use Projom\Storage\MySQL\Util;
+use Projom\Storage\SQL\Statement\Builder;
 use Projom\Storage\SQL\Util\Aggregate;
 use Projom\Storage\SQL\Util\Operator;
 
@@ -447,5 +448,16 @@ trait Repository
 		$records = static::processRecords($records);
 
 		return $records;
+	}
+
+	/**
+	 * Build a query with the repository.
+	 * 
+	 * * Example use: User::query()->filterOn('Name', 'John')->select();
+	 */
+	public static function query(): Builder
+	{
+		$table = static::invoke();
+		return Query::build($table);
 	}
 }
