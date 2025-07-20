@@ -1,7 +1,7 @@
 {
     "name": "klorinmannen/projom-storage",
     "description": "Projom storage module",
-    "homepage": "www.projom.se",
+    "homepage": "https://projom.se",
     "type": "library",
     "keywords": [
         "projom",
