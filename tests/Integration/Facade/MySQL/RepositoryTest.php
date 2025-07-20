@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 use Projom\Storage\Engine as EngineObject;
 use Projom\Storage\Facade\Engine;
+use Projom\Storage\SQL\Util\Sort;
 use Projom\Tests\Integration\Facade\UserRepository;
 
 class RepositoryTest extends TestCase
@@ -207,7 +208,7 @@ class RepositoryTest extends TestCase
 	#[Test]
 	public function paginate(): void
 	{
-		$userRecords = UserRepository::paginate(2, 2, ['Lastname' => 'Doe']);
+		$userRecords = UserRepository::paginate(2, 2, ['Lastname' => Sort::ASC], ['Lastname' => 'Doe']);
 		$this->assertCount(2, $userRecords);
 	}
 

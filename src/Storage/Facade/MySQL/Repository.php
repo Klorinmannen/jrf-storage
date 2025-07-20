@@ -420,23 +420,23 @@ trait Repository
 	/**
 	 * Paginate records.
 	 * 
-	 * * Example use: User::paginate(1, 10)
-	 * * Example use: User::paginate(1, 10, ['Name' => 'John'], ['Name' => Sort::ASC])
+	 * * Example use: User::paginate(1, 10, ['Name' => Sort::ASC])
+	 * * Example use: User::paginate(1, 10, ['Name' => Sort::ASC], ['Name' => 'John'])
 	 */
 	public static function paginate(
 		int $page,
 		int $pageSize,
+		array $sortOn,
 		array $filters = [],
-		array $sortOn = []
 	): null|array {
+
 		$table = static::invoke();
 		$query = Query::build($table);
 
+		$query->sortOn($sortOn);
+
 		if ($filters)
 			$query->filterOnFields($filters);
-
-		if ($sortOn)
-			$query->sortOn($sortOn);
 
 		$offset = ($page - 1) * $pageSize;
 		$query->offset($offset)->limit($pageSize);

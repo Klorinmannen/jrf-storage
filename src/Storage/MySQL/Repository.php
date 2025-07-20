@@ -406,22 +406,22 @@ trait Repository
 	/**
 	 * Paginate records.
 	 * 
-	 * * Example use: $user->paginate(1, 10)
-	 * * Example use: $user->paginate(1, 10, ['Name' => 'John'], ['Name' => Sort::ASC])
+	 * * Example use: $user->paginate(1, 10, ['Name' => Sort::ASC])
+	 * * Example use: $user->paginate(1, 10, ['Name' => Sort::ASC], ['Name' => 'John'])
 	 */
 	public function paginate(
 		int $page,
 		int $pageSize,
+		array $sortOn,
 		array $filters = [],
-		array $sortOn = []
 	): null|array {
+
 		$query = $this->query->build($this->table);
+
+		$query->sortOn($sortOn);
 
 		if ($filters)
 			$query->filterOnFields($filters);
-
-		if ($sortOn)
-			$query->sortOn($sortOn);
 
 		$offset = ($page - 1) * $pageSize;
 		$query->offset($offset)->limit($pageSize);

@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 use Projom\Storage\Engine;
 use Projom\Storage\MySQL\Query;
+use Projom\Storage\SQL\Util\Sort;
 use Projom\Tests\Integration\UserRepository;
 
 class RepositoryTest extends TestCase
@@ -243,7 +244,7 @@ class RepositoryTest extends TestCase
 		$userRepo = new UserRepository();
 		$userRepo->invoke($this->query);
 
-		$userRecords = $userRepo->paginate(2, 2, ['Lastname' => 'Doe']);
+		$userRecords = $userRepo->paginate(2, 2, ['Lastname' => Sort::ASC], ['Lastname' => 'Doe']);
 		$this->assertCount(2, $userRecords);
 	}
 
