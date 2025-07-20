@@ -230,7 +230,7 @@ trait Repository
 	/**
 	 * Clone a record.
 	 * 
-	 * @param array $newRecord used to write new values to fields from the cloned record.
+	 * @param array $newRecord used to write new values to the new, cloned, record.
 	 * 
 	 * * Example use: User::clone($userID = 3)
 	 * * Example use: User::clone($userID = 3, ['Name' => 'New Name'])
