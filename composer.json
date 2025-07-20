@@ -1,17 +1,28 @@
 {
     "name": "klorinmannen/projom-storage",
     "description": "Projom storage module",
-    "autoload": {
-        "psr-4": {
-            "Projom\\": "src/"
-        }
-    },
+    "homepage": "www.projom.se",
+    "type": "library",
+    "keywords": [
+        "projom",
+        "storage",
+        "projom-storage",
+        "mysql",
+        "repository",
+        "query",
+        "query builder"
+    ],
     "license": "MIT",
     "authors": [
         {
             "name": "Jonatan Rao-Fransson"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Projom\\": "src/"
+        }
+    },
     "require": {
         "php": ">=8.2.0",
         "psr/log": "^3.0"
