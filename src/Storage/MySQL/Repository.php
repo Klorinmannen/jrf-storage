@@ -324,24 +324,7 @@ trait Repository
 	 */
 	public function count(string $countField = '*',  array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::COUNT->buildSQL($countField, 'count');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($countField, 'COUNT', $filters, $groupByFields);
 	}
 
 	/**
@@ -353,24 +336,7 @@ trait Repository
 	 */
 	public function sum(string $sumField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::SUM->buildSQL($sumField, 'sum');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($sumField, 'SUM', $filters, $groupByFields);
 	}
 
 	/**
@@ -382,24 +348,7 @@ trait Repository
 	 */
 	public function avg(string $averageField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::AVG->buildSQL($averageField, 'avg');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($averageField, 'AVG', $filters, $groupByFields);
 	}
 
 	/**
@@ -411,24 +360,7 @@ trait Repository
 	 */
 	public function min(string $minField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::MIN->buildSQL($minField, 'min');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($minField, 'MIN', $filters, $groupByFields);
 	}
 
 	/**
@@ -440,12 +372,22 @@ trait Repository
 	 */
 	public function max(string $maxField, array $filters = [], array $groupByFields = []): null|array
 	{
+		return $this->aggregate($maxField, 'MAX', $filters, $groupByFields);
+	}
+
+	private function aggregate(
+		string $field,
+		string $aggregate,
+		array $filters = [],
+		array $groupByFields = []
+	): null|array {
+
 		$query = $this->query->build($this->table);
 
 		if ($filters)
 			$query->filterOnFields($filters);
 
-		$aggregate = Aggregate::MAX->buildSQL($maxField, 'max');
+		$aggregate = Aggregate::from(strtoupper($aggregate))->buildSQL($field, strtolower($aggregate));
 		$fields = [$aggregate];
 
 		if ($groupByFields) {
