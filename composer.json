@@ -3,6 +3,7 @@
     "description": "Projom storage module",
     "homepage": "https://projom.se",
     "type": "library",
+    "license": "MIT",
     "keywords": [
         "projom",
         "storage",
@@ -12,7 +13,6 @@
         "query",
         "query builder"
     ],
-    "license": "MIT",
     "authors": [
         {
             "name": "Jonatan Rao-Fransson"
