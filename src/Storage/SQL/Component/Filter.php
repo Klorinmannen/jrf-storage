@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Component;
+namespace JRF\Storage\SQL\Component;
 
-use Projom\Storage\SQL\Component\ComponentInterface;
-use Projom\Storage\SQL\Component\Column;
-use Projom\Storage\SQL\Component\Filter\Between;
-use Projom\Storage\SQL\Component\Filter\In;
-use Projom\Storage\SQL\Component\Filter\Nullable;
-use Projom\Storage\SQL\Component\Filter\Standard;
-use Projom\Storage\SQL\Component\Filter\Util;
-use Projom\Storage\SQL\Util\Operator;
+use JRF\Storage\SQL\Component\ComponentInterface;
+use JRF\Storage\SQL\Component\Column;
+use JRF\Storage\SQL\Component\Filter\Between;
+use JRF\Storage\SQL\Component\Filter\In;
+use JRF\Storage\SQL\Component\Filter\Nullable;
+use JRF\Storage\SQL\Component\Filter\Standard;
+use JRF\Storage\SQL\Component\Filter\Util;
+use JRF\Storage\SQL\Util\Operator;
 
 class Filter implements ComponentInterface
 {

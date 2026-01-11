@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Component\Filter;
+namespace JRF\Tests\Unit\Storage\SQL\Component\Filter;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Component\Column;
-use Projom\Storage\SQL\Component\Filter\Nullable;
-use Projom\Storage\SQL\Util\Operator;
+use JRF\Storage\SQL\Component\Column;
+use JRF\Storage\SQL\Component\Filter\Nullable;
+use JRF\Storage\SQL\Util\Operator;
 
 class NullableTest extends TestCase
 {

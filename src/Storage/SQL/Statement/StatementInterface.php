@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Statement;
+namespace JRF\Storage\SQL\Statement;
 
 interface StatementInterface
 {

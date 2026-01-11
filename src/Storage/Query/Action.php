@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Query;
+namespace JRF\Storage\Query;
 
 enum Action: string
 {

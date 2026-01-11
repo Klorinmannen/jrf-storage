@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Util;
+namespace JRF\Storage\SQL\Util;
 
 enum Join: string
 {

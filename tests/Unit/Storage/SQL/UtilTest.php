@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL;
+namespace JRF\Tests\Unit\Storage\SQL;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Util;
+use JRF\Storage\SQL\Util;
 
 class UtilTest extends TestCase
 {

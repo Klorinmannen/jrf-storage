@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Component\Filter;
+namespace JRF\Storage\SQL\Component\Filter;
 
-use Projom\Storage\SQL\Component\Column;
-use Projom\Storage\SQL\Util\Operator;
+use JRF\Storage\SQL\Component\Column;
+use JRF\Storage\SQL\Util\Operator;
 
 class Nullable
 {

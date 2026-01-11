@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Projom\tests\Integration;
+namespace JRF\tests\Integration;
 
 include_once __DIR__ . '/UserRepository.php';
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\Engine;
-use Projom\Storage\MySQL\Query;
-use Projom\Storage\SQL\Util\Sort;
-use Projom\Tests\Integration\UserRepository;
+use JRF\Storage\Engine;
+use JRF\Storage\MySQL\Query;
+use JRF\Storage\SQL\Util\Sort;
+use JRF\Tests\Integration\UserRepository;
 
 class RepositoryTest extends TestCase
 {
@@ -25,8 +25,8 @@ class RepositoryTest extends TestCase
 			'options' => [],
 			'connections' => [
 				[
-					'username' => 'projom',
-					'password' => 'projom',
+					'username' => 'JRF',
+					'password' => 'JRF',
 					'host' => 'localhost',
 					'port' => 3306,
 					'database' => 'Integration'

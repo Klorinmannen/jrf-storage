@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Component;
+namespace JRF\Tests\Unit\Storage\SQL\Component;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Component\Group;
+use JRF\Storage\SQL\Component\Group;
 
 class GroupTest extends TestCase
 {

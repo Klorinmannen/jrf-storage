@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Util;
+namespace JRF\Tests\Unit\Storage\SQL\Util;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Util\LogicalOperator;
+use JRF\Storage\SQL\Util\LogicalOperator;
 
 class LogicalOperatorTest extends TestCase
 {

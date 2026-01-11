@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Facade\Query;
+namespace JRF\Storage\Facade\Query;
 
-use Projom\Storage\Facade\Engine;
-use Projom\Storage\Query\Action;
-use Projom\Storage\Query\Util;
+use JRF\Storage\Facade\Engine;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Query\Util;
 
 class DB
 {

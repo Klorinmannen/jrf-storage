@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Statement;
+namespace JRF\Storage\SQL\Statement;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-use Projom\Storage\Query\Action;
-use Projom\Storage\Engine\Driver\DriverBase;
-use Projom\Storage\Query\Format;
-use Projom\Storage\SQL\Statement\DTO;
-use Projom\Storage\SQL\Util\Join;
-use Projom\Storage\SQL\Util\LogicalOperator;
-use Projom\Storage\SQL\Util\Operator;
-use Projom\Storage\SQL\Util\Filter;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Engine\Driver\DriverBase;
+use JRF\Storage\Query\Format;
+use JRF\Storage\SQL\Statement\DTO;
+use JRF\Storage\SQL\Util\Join;
+use JRF\Storage\SQL\Util\LogicalOperator;
+use JRF\Storage\SQL\Util\Operator;
+use JRF\Storage\SQL\Util\Filter;
 
 class Builder
 {

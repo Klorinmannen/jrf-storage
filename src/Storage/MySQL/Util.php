@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\MySQL;
+namespace JRF\Storage\MySQL;
 
-use Projom\Storage\Util as StorageUtil;
+use JRF\Storage\Util as StorageUtil;
 
 class Util extends StorageUtil
 {

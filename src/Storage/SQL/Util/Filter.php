@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Util;
+namespace JRF\Storage\SQL\Util;
 
-use Projom\Storage\SQL\Util\LogicalOperator;
-use Projom\Storage\SQL\Util\Operator;
-use Projom\Storage\Util;
+use JRF\Storage\SQL\Util\LogicalOperator;
+use JRF\Storage\SQL\Util\Operator;
+use JRF\Storage\Util;
 
 class Filter
 {

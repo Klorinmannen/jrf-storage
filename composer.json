@@ -1,13 +1,13 @@
 {
-    "name": "klorinmannen/projom-storage",
-    "description": "Projom storage module",
-    "homepage": "https://projom.se",
+    "name": "klorinmannen/jrf-storage",
+    "description": "Data storage access library",
+    "homepage": "https://jrf.nu",
     "type": "library",
     "license": "MIT",
     "keywords": [
-        "projom",
+        "data",
+        "access",
         "storage",
-        "projom-storage",
         "mysql",
         "repository",
         "query",
@@ -20,7 +20,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Projom\\": "src/"
+            "JRF\\": "src/"
         }
     },
     "require": {

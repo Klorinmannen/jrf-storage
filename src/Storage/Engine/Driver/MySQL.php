@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Engine\Driver;
+namespace JRF\Storage\Engine\Driver;
 
 use PDOStatement;
 
-use Projom\Storage\Query\Action;
-use Projom\Storage\Engine\Driver\DriverBase;
-use Projom\Storage\Engine\Driver\Connection\ConnectionInterface;
-use Projom\Storage\Engine\Driver\Connection\PDOConnection;
-use Projom\Storage\SQL\Statement;
-use Projom\Storage\SQL\Statement\Builder;
-use Projom\Storage\SQL\Statement\DTO;
-use Projom\Storage\SQL\Statement\StatementInterface;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Engine\Driver\DriverBase;
+use JRF\Storage\Engine\Driver\Connection\ConnectionInterface;
+use JRF\Storage\Engine\Driver\Connection\PDOConnection;
+use JRF\Storage\SQL\Statement;
+use JRF\Storage\SQL\Statement\Builder;
+use JRF\Storage\SQL\Statement\DTO;
+use JRF\Storage\SQL\Statement\StatementInterface;
 
 class MySQL extends DriverBase
 {

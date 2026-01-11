@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\Engine\Driver;
+namespace JRF\Tests\Unit\Storage\Engine\Driver;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\Engine\Driver\Config;
-use Projom\Storage\Engine\Driver\Driver;
+use JRF\Storage\Engine\Driver\Config;
+use JRF\Storage\Engine\Driver\Driver;
 
 class ConfigTest extends TestCase
 {

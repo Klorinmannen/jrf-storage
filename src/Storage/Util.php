@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage;
+namespace JRF\Storage;
 
 class Util
 {

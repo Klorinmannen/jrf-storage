@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Component\Filter;
+namespace JRF\Storage\SQL\Component\Filter;
 
-use Projom\Storage\SQL\Util as SQLUtil;
+use JRF\Storage\SQL\Util as SQLUtil;
 
 class Util extends SQLUtil
 {

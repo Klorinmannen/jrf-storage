@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\MySQL;
+namespace JRF\Storage\MySQL;
 
-use Projom\Storage\Engine;
-use Projom\Storage\Engine\Driver\Driver;
-use Projom\Storage\Query\Action;
-use Projom\Storage\Query\Util;
-use Projom\Storage\SQL\Statement\Builder;
+use JRF\Storage\Engine;
+use JRF\Storage\Engine\Driver\Driver;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Query\Util;
+use JRF\Storage\SQL\Statement\Builder;
 
 class Query
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Statement;
+namespace JRF\Tests\Unit\Storage\SQL\Statement;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -10,12 +10,12 @@ use PHPUnit\Framework\TestCase;
 
 use Psr\Log\NullLogger;
 
-use Projom\Storage\Engine\Driver\MySQL as MySQLDriver;
-use Projom\Storage\Query\Format;
-use Projom\Storage\SQL\Statement\Builder;
-use Projom\Storage\SQL\Util\Join;
-use Projom\Storage\SQL\Util\LogicalOperator;
-use Projom\Storage\SQL\Util\Operator;
+use JRF\Storage\Engine\Driver\MySQL as MySQLDriver;
+use JRF\Storage\Query\Format;
+use JRF\Storage\SQL\Statement\Builder;
+use JRF\Storage\SQL\Util\Join;
+use JRF\Storage\SQL\Util\LogicalOperator;
+use JRF\Storage\SQL\Util\Operator;
 
 class BuilderTest extends TestCase
 {

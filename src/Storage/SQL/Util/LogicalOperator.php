@@ -1,6 +1,6 @@
 <?php
 
-namespace Projom\Storage\SQL\Util;
+namespace JRF\Storage\SQL\Util;
 
 enum LogicalOperator: string
 {

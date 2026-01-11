@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\tests\Integration\Facade\MySQL;
+namespace JRF\tests\Integration\Facade\MySQL;
 
 include_once __DIR__ . '/../../UserRecord.php';
 
@@ -10,15 +10,15 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Tests\Integration\UserRecord;
+use JRF\Tests\Integration\UserRecord;
 
-use Projom\Storage\Engine as EngineObject;
-use Projom\Storage\Facade\Engine;
-use Projom\Storage\Facade\MySQL\Query;
-use Projom\Storage\Query\Format;
-use Projom\Storage\SQL\Util\Join;
-use Projom\Storage\SQL\Util\Operator;
-use Projom\Storage\SQL\Util\Sort;
+use JRF\Storage\Engine as EngineObject;
+use JRF\Storage\Facade\Engine;
+use JRF\Storage\Facade\MySQL\Query;
+use JRF\Storage\Query\Format;
+use JRF\Storage\SQL\Util\Join;
+use JRF\Storage\SQL\Util\Operator;
+use JRF\Storage\SQL\Util\Sort;
 
 class QueryTest extends TestCase
 {
@@ -29,8 +29,8 @@ class QueryTest extends TestCase
 			'options' => [],
 			'connections' => [
 				[
-					'username' => 'projom',
-					'password' => 'projom',
+					'username' => 'JRF',
+					'password' => 'JRF',
 					'host' => 'localhost',
 					'port' => 3306,
 					'database' => 'Integration'

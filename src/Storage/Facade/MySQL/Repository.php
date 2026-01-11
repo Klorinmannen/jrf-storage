@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Facade\MySQL;
+namespace JRF\Storage\Facade\MySQL;
 
 use Exception;
 
-use Projom\Storage\Facade\MySQL\Query;
-use Projom\Storage\MySQL\Util;
-use Projom\Storage\SQL\Statement\Builder;
-use Projom\Storage\SQL\Util\Aggregate;
-use Projom\Storage\SQL\Util\Operator;
+use JRF\Storage\Facade\MySQL\Query;
+use JRF\Storage\MySQL\Util;
+use JRF\Storage\SQL\Statement\Builder;
+use JRF\Storage\SQL\Util\Aggregate;
+use JRF\Storage\SQL\Util\Operator;
 
 /**
  * Static repository - a trait that provides a set of methods to interact with a database table.

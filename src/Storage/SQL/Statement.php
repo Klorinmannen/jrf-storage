@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL;
+namespace JRF\Storage\SQL;
 
-use Projom\Storage\SQL\Statement\DTO;
-use Projom\Storage\SQL\Statement\Delete;
-use Projom\Storage\SQL\Statement\Insert;
-use Projom\Storage\SQL\Statement\Select;
-use Projom\Storage\SQL\Statement\Update;
+use JRF\Storage\SQL\Statement\DTO;
+use JRF\Storage\SQL\Statement\Delete;
+use JRF\Storage\SQL\Statement\Insert;
+use JRF\Storage\SQL\Statement\Select;
+use JRF\Storage\SQL\Statement\Update;
 
 class Statement
 {

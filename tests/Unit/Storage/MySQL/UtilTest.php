@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\MySQL;
+namespace JRF\Tests\Unit\Storage\MySQL;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\MySQL\Util;
+use JRF\Storage\MySQL\Util;
 
 class UtilTest extends TestCase
 {
