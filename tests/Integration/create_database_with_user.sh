@@ -1,19 +1,19 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-	echo "Usage: $0 <username> <database_name> [REMOTE = localhost] [password = random]"
+	echo "Usage: $0 <username> <password> <database_name>"
 	exit 1
 fi
 USERNAME=$1
 
-PASSWORD=$(openssl rand -base64 12);
-PASSWORD=${PASSWORD:0:8}
-if [ -n "$2" ]; then
-	PASSWORD=$2
+if [ -z "$2" ]; then
+	echo "Usage: $0 <username> <password> <database_name>"
+	exit 1
 fi
+PASSWORD=$2
 
 if [ -z "$3" ]; then
-	echo "Usage: $0 <username> <database_name> [REMOTE = localhost] [password = random]"
+	echo "Usage: $0 <username> <password> <database_name>"
 	exit 1
 fi
 DATABASE_NAME=$3

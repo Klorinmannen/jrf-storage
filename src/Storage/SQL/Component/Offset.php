@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Component;
+namespace JRF\Storage\SQL\Component;
 
-use Projom\Storage\SQL\Component\ComponentInterface;
+use JRF\Storage\SQL\Component\ComponentInterface;
 
 class Offset implements ComponentInterface
 {

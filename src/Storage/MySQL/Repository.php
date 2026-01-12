@@ -2,32 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\MySQL;
+namespace JRF\Storage\MySQL;
 
 use Exception;
 
-use Projom\Storage\MySQL\Query;
-use Projom\Storage\MySQL\Util;
-use Projom\Storage\SQL\Util\Aggregate;
-use Projom\Storage\SQL\Util\Operator;
+use JRF\Storage\MySQL\Query;
+use JRF\Storage\MySQL\Util;
+use JRF\Storage\SQL\Statement\Builder;
+use JRF\Storage\SQL\Util\Aggregate;
+use JRF\Storage\SQL\Util\Operator;
 
 /**
  * Repository is a trait that provides a set of methods to interact with a database table.
- * 
- * How to use:
- * * Use this trait to create a query-able "repository" of the class using the trait.
- * * The name of the class using the trait should be the same as the database table name.
- *
- * Optional methods to implement for additional processing:
- * * formatFields(): array [ 'Field' => 'string', 'AnotherField' => 'int', ... ]
- * * redactFields(): array [ 'Field', 'AnotherField' ]
- * 
- * The value of all redacted fields will be replaced with the string "__REDACTED__".
  */
 trait Repository
 {
-	private const REDACTED = '__REDACTED__';
-
 	private readonly Query $query;
 	private readonly string $table;
 	private readonly string $primaryField;
@@ -122,73 +111,33 @@ trait Repository
 		return [];
 	}
 
+	/**
+	 * Returns whether to rekey the records with the primary field.
+	 * 
+	 * Default is false.
+	 */
+	public function rekeyWithPrimaryField(): bool
+	{
+		return false;
+	}
+
 	private function processRecords(array $records): array
 	{
-		$records = Util::rekey($records, $this->primaryField);
-
-		$processedRecords = [];
-		foreach ($records as $key => $record) {
-			$record = $this->selectRecordFields($record);
-			$record = $this->formatRecord($record);
-			$record = $this->redactRecord($record);
-			$record = $this->translateRecordFields($record);
-			$processedRecords[$key] = $record;
-		}
-
+		$options = $this->processOptions();
+		$processedRecords = Util::processRecords($records, $options);
 		return $processedRecords;
 	}
 
-	private function formatRecord(array $record): array
+	private function processOptions(): array
 	{
-		if (!$formatFields = $this->formatFields())
-			return $record;
-
-		foreach ($formatFields as $field => $type) {
-			if (!array_key_exists($field, $record))
-				continue;
-			$value = $record[$field];
-			$record[$field] = Util::format($value, $type);
-		}
-
-		return $record;
-	}
-
-	private function redactRecord(array $record): array
-	{
-		if (!$redactedFields = $this->redactFields())
-			return $record;
-
-		foreach ($redactedFields as $field)
-			if (array_key_exists($field, $record))
-				$record[$field] = static::REDACTED;
-
-		return $record;
-	}
-
-	private function selectRecordFields(array $record): array
-	{
-		if (!$selectFields = $this->selectFields())
-			return $record;
-
-		$modifiedRecord = [];
-		foreach ($selectFields as $field)
-			if (array_key_exists($field, $record))
-				$modifiedRecord[$field] = $record[$field];
-
-		return $modifiedRecord;
-	}
-
-	private function translateRecordFields(array $record): array
-	{
-		if (!$translateFields = $this->translateFields())
-			return $record;
-
-		$translatedRecord = [];
-		foreach ($translateFields as $field => $translatedField)
-			if (array_key_exists($field, $record))
-				$translatedRecord[$translatedField] = $record[$field];
-
-		return $translatedRecord;
+		$primaryField = $this->rekeyWithPrimaryField() ? $this->primaryField : '';
+		return [
+			'select_fields' => $this->selectFields(),
+			'format_fields' => $this->formatFields(),
+			'redact_fields' => $this->redactFields(),
+			'translate_fields' => $this->translateFields(),
+			'rekey_with_primary_field' => $primaryField,
+		];
 	}
 
 	/**
@@ -274,7 +223,7 @@ trait Repository
 	/**
 	 * Clone a record.
 	 * 
-	 * @param array $newRecord used to write new values to fields from the cloned record.
+	 * @param array $newRecord used to write new values to the new, cloned, record.
 	 * 
 	 * * Example use: $user->clone($userID = 3)
 	 * * Example use: $user->clone($userID = 3, ['Name' => 'New Name'])
@@ -376,24 +325,7 @@ trait Repository
 	 */
 	public function count(string $countField = '*',  array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::COUNT->buildSQL($countField, 'count');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($countField, 'COUNT', $filters, $groupByFields);
 	}
 
 	/**
@@ -405,24 +337,7 @@ trait Repository
 	 */
 	public function sum(string $sumField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::SUM->buildSQL($sumField, 'sum');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($sumField, 'SUM', $filters, $groupByFields);
 	}
 
 	/**
@@ -434,24 +349,7 @@ trait Repository
 	 */
 	public function avg(string $averageField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::AVG->buildSQL($averageField, 'avg');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($averageField, 'AVG', $filters, $groupByFields);
 	}
 
 	/**
@@ -463,24 +361,7 @@ trait Repository
 	 */
 	public function min(string $minField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$query = $this->query->build($this->table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::MIN->buildSQL($minField, 'min');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return $this->aggregate($minField, 'MIN', $filters, $groupByFields);
 	}
 
 	/**
@@ -492,12 +373,22 @@ trait Repository
 	 */
 	public function max(string $maxField, array $filters = [], array $groupByFields = []): null|array
 	{
+		return $this->aggregate($maxField, 'MAX', $filters, $groupByFields);
+	}
+
+	private function aggregate(
+		string $field,
+		string $aggregate,
+		array $filters = [],
+		array $groupByFields = []
+	): null|array {
+
 		$query = $this->query->build($this->table);
 
 		if ($filters)
 			$query->filterOnFields($filters);
 
-		$aggregate = Aggregate::MAX->buildSQL($maxField, 'max');
+		$aggregate = Aggregate::from(strtoupper($aggregate))->buildSQL($field, strtolower($aggregate));
 		$fields = [$aggregate];
 
 		if ($groupByFields) {
@@ -515,22 +406,22 @@ trait Repository
 	/**
 	 * Paginate records.
 	 * 
-	 * * Example use: $user->paginate(1, 10)
-	 * * Example use: $user->paginate(1, 10, ['Name' => 'John'], ['Name' => Sort::ASC])
+	 * * Example use: $user->paginate(1, 10, ['Name' => Sort::ASC])
+	 * * Example use: $user->paginate(1, 10, ['Name' => Sort::ASC], ['Name' => 'John'])
 	 */
 	public function paginate(
 		int $page,
 		int $pageSize,
+		array $sortOn,
 		array $filters = [],
-		array $sortOn = []
 	): null|array {
+
 		$query = $this->query->build($this->table);
+
+		$query->sortOn($sortOn);
 
 		if ($filters)
 			$query->filterOnFields($filters);
-
-		if ($sortOn)
-			$query->sortOn($sortOn);
 
 		$offset = ($page - 1) * $pageSize;
 		$query->offset($offset)->limit($pageSize);
@@ -542,5 +433,15 @@ trait Repository
 		$records = $this->processRecords($records);
 
 		return $records;
+	}
+
+	/**
+	 * Build a query with the repository.
+	 * 
+	 * * Example use: User->query()->filterOn('Name', 'John')->select();
+	 */
+	public function query(): Builder
+	{
+		return $this->query->build($this->table);
 	}
 }

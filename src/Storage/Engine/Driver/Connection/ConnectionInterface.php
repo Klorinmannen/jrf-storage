@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Engine\Driver\Connection;
+namespace JRF\Storage\Engine\Driver\Connection;
 
 interface ConnectionInterface
 {

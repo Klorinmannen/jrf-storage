@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Statement;
+namespace JRF\Tests\Unit\Storage\SQL\Statement;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Statement\DTO;
-use Projom\Storage\SQL\Statement\Update;
-use Projom\Storage\SQL\Util\Filter;
-use Projom\Storage\SQL\Util\Join;
-use Projom\Storage\SQL\Util\LogicalOperator;
+use JRF\Storage\SQL\Statement\DTO;
+use JRF\Storage\SQL\Statement\Update;
+use JRF\Storage\SQL\Util\Filter;
+use JRF\Storage\SQL\Util\Join;
+use JRF\Storage\SQL\Util\LogicalOperator;
 
 class UpdateTest extends TestCase
 {

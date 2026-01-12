@@ -1,17 +1,28 @@
 {
-    "name": "klorinmannen/projom-storage",
-    "description": "Projom storage module",
-    "autoload": {
-        "psr-4": {
-            "Projom\\": "src/"
-        }
-    },
+    "name": "klorinmannen/jrf-storage",
+    "description": "Data storage access library",
+    "homepage": "https://jrf.nu",
+    "type": "library",
     "license": "MIT",
+    "keywords": [
+        "data",
+        "access",
+        "storage",
+        "mysql",
+        "repository",
+        "query",
+        "query builder"
+    ],
     "authors": [
         {
             "name": "Jonatan Rao-Fransson"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "JRF\\": "src/"
+        }
+    },
     "require": {
         "php": ">=8.2.0",
         "psr/log": "^3.0"

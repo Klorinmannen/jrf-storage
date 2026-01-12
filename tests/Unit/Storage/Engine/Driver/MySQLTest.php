@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\Engine\Driver;
+namespace JRF\Tests\Unit\Storage\Engine\Driver;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\Query\Action;
-use Projom\Storage\Engine\Driver\Connection\ConnectionInterface;
-use Projom\Storage\Engine\Driver\MySQL;
-use Projom\Storage\Engine\Driver\Connection\PDOConnection;
-use Projom\Storage\Query\Format;
-use Projom\Storage\SQL\Statement;
-use Projom\Storage\SQL\Statement\DTO;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Engine\Driver\Connection\ConnectionInterface;
+use JRF\Storage\Engine\Driver\MySQL;
+use JRF\Storage\Engine\Driver\Connection\PDOConnection;
+use JRF\Storage\Query\Format;
+use JRF\Storage\SQL\Statement;
+use JRF\Storage\SQL\Statement\DTO;
 
 class FakePDOConnection implements ConnectionInterface
 {

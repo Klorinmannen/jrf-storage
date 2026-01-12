@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Component;
+namespace JRF\Tests\Unit\Storage\SQL\Component;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Component\Table;
+use JRF\Storage\SQL\Component\Table;
 
 class TableTest extends TestCase
 {

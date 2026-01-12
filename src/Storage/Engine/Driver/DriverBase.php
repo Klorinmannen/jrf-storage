@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Engine\Driver;
+namespace JRF\Storage\Engine\Driver;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-use Projom\Storage\Engine\Driver\Connection\ConnectionInterface;
-use Projom\Storage\Query\Action;
-use Projom\Storage\Query\Format;
-use Projom\Storage\Query\RecordInterface;
+use JRF\Storage\Engine\Driver\Connection\ConnectionInterface;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Query\Format;
+use JRF\Storage\Query\RecordInterface;
 
 abstract class DriverBase implements LoggerAwareInterface
 {

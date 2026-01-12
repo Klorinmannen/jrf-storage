@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Statement;
+namespace JRF\Storage\SQL\Statement;
 
 use Stringable;
 
-use Projom\Storage\SQL\Component\Column;
-use Projom\Storage\SQL\Component\Filter;
-use Projom\Storage\SQL\Component\Group;
-use Projom\Storage\SQL\Component\Join;
-use Projom\Storage\SQL\Component\Limit;
-use Projom\Storage\SQL\Component\Offset;
-use Projom\Storage\SQL\Component\Order;
-use Projom\Storage\SQL\Component\Table;
-use Projom\Storage\SQL\Statement\StatementInterface;
-use Projom\Storage\SQL\Statement\DTO;
-use Projom\Storage\SQL\Util;
+use JRF\Storage\SQL\Component\Column;
+use JRF\Storage\SQL\Component\Filter;
+use JRF\Storage\SQL\Component\Group;
+use JRF\Storage\SQL\Component\Join;
+use JRF\Storage\SQL\Component\Limit;
+use JRF\Storage\SQL\Component\Offset;
+use JRF\Storage\SQL\Component\Order;
+use JRF\Storage\SQL\Component\Table;
+use JRF\Storage\SQL\Statement\StatementInterface;
+use JRF\Storage\SQL\Statement\DTO;
+use JRF\Storage\SQL\Util;
 
 class Select implements StatementInterface, Stringable
 {

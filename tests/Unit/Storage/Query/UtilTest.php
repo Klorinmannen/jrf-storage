@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\Query;
+namespace JRF\Tests\Unit\Storage\Query;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\Query\Util;
+use JRF\Storage\Query\Util;
 
 class UtilTest extends TestCase
 {

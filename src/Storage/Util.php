@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage;
+namespace JRF\Storage;
 
 class Util
 {
@@ -73,19 +73,5 @@ class Util
 	public static function rekey(array $records, string $field): array
 	{
 		return array_column($records, null, $field);
-	}
-
-	public static function format(mixed $value, string $type): mixed
-	{
-		$type = strtolower($type);
-		return match ($type) {
-			'int' => (int) $value,
-			'float' => (float) $value,
-			'bool' => (bool) $value,
-			'date' => date('Y-m-d', strtotime((string) $value)),
-			'datetime' => date('Y-m-d H:i:s', strtotime((string) $value)),
-			'string' => (string) $value,
-			default => $value,
-		};
 	}
 }

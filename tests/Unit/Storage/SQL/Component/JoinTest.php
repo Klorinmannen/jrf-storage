@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Component;
+namespace JRF\Tests\Unit\Storage\SQL\Component;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Component\Join;
-use Projom\Storage\SQL\Util\Join as UtilJoin;
+use JRF\Storage\SQL\Component\Join;
+use JRF\Storage\SQL\Util\Join as UtilJoin;
 
 class JoinTest extends TestCase
 {

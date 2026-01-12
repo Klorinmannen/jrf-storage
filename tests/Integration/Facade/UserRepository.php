@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Integration\Facade;
+namespace JRF\Tests\Integration\Facade;
 
-use Projom\Storage\Facade\MySQL\Repository;
+use JRF\Storage\Facade\MySQL\Repository;
 
 class UserRepository
 {

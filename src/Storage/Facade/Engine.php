@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Facade;
+namespace JRF\Storage\Facade;
 
-use Projom\Storage\Engine as EngineObject;
-use Projom\Storage\Query\Action;
-use Projom\Storage\Engine\Driver\Driver;
+use JRF\Storage\Engine as EngineObject;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Engine\Driver\Driver;
 
 class Engine
 {

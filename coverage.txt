@@ -1,92 +1,90 @@
 
 
 Code Coverage Report:
-  2025-05-27 08:54:43
+  2026-01-11 21:57:16
 
  Summary:
-  Classes: 66.67% (34/51)
-  Methods: 68.27% (213/312)
-  Lines:   65.71% (849/1292)
+  Classes: 67.35% (33/49)
+  Methods: 66.78% (205/307)
+  Lines:   69.63% (800/1149)
 
-Projom\Storage\Engine\Driver\Config
+JRF\Storage\Engine\Driver\Config
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% (  9/  9)
-Projom\Storage\Engine\Driver\Connection\Config
+JRF\Storage\Engine\Driver\Connection\Config
   Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 12/ 12)
-Projom\Storage\Engine\Driver\Connection\ConnectionFactory
+JRF\Storage\Engine\Driver\Connection\ConnectionFactory
   Methods:  66.67% ( 2/ 3)   Lines:  94.44% ( 17/ 18)
-Projom\Storage\Engine\Driver\Connection\DSN
+JRF\Storage\Engine\Driver\Connection\DSN
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% ( 19/ 19)
-Projom\Storage\Engine\Driver\Connection\PDOConnection
+JRF\Storage\Engine\Driver\Connection\PDOConnection
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 14/ 14)
-Projom\Storage\Engine\Driver\DriverBase
-  Methods:  42.86% ( 3/ 7)   Lines:  86.67% ( 39/ 45)
-Projom\Storage\Engine\Driver\DriverFactory
+JRF\Storage\Engine\Driver\DriverBase
+  Methods:  42.86% ( 3/ 7)   Lines:  86.96% ( 40/ 46)
+JRF\Storage\Engine\Driver\DriverFactory
   Methods:  75.00% ( 3/ 4)   Lines:  84.21% ( 16/ 19)
-Projom\Storage\Engine\Driver\MySQL
+JRF\Storage\Engine\Driver\MySQL
   Methods:  87.50% (14/16)   Lines:  97.96% ( 96/ 98)
-Projom\Storage\Facade\Engine
+JRF\Storage\Facade\Engine
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% (  8/  8)
-Projom\Storage\Logger\SimpleLogger
-  Methods:  61.54% ( 8/13)   Lines:  79.37% ( 50/ 63)
-Projom\Storage\MySQL\Util
-  Methods: 100.00% ( 5/ 5)   Lines: 100.00% ( 13/ 13)
-Projom\Storage\Query\Util
+JRF\Storage\MySQL\Util
+  Methods:  54.55% ( 6/11)   Lines:  35.38% ( 23/ 65)
+JRF\Storage\Query\Util
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
-Projom\Storage\SQL\Component\Column
+JRF\Storage\SQL\Component\Column
   Methods:  90.91% (10/11)   Lines:  97.22% ( 35/ 36)
-Projom\Storage\SQL\Component\Filter
+JRF\Storage\SQL\Component\Filter
   Methods:  90.00% ( 9/10)   Lines:  98.08% ( 51/ 52)
-Projom\Storage\SQL\Component\Filter\Between
+JRF\Storage\SQL\Component\Filter\Between
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 14/ 14)
-Projom\Storage\SQL\Component\Filter\In
+JRF\Storage\SQL\Component\Filter\In
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 15/ 15)
-Projom\Storage\SQL\Component\Filter\Nullable
+JRF\Storage\SQL\Component\Filter\Nullable
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
-Projom\Storage\SQL\Component\Filter\Standard
+JRF\Storage\SQL\Component\Filter\Standard
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 10/ 10)
-Projom\Storage\SQL\Component\Filter\Util
+JRF\Storage\SQL\Component\Filter\Util
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  9/  9)
-Projom\Storage\SQL\Component\Group
+JRF\Storage\SQL\Component\Group
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% ( 14/ 14)
-Projom\Storage\SQL\Component\Join
+JRF\Storage\SQL\Component\Join
   Methods: 100.00% ( 8/ 8)   Lines: 100.00% ( 24/ 24)
-Projom\Storage\SQL\Component\Limit
+JRF\Storage\SQL\Component\Limit
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% (  4/  4)
-Projom\Storage\SQL\Component\Offset
+JRF\Storage\SQL\Component\Offset
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% (  4/  4)
-Projom\Storage\SQL\Component\Order
+JRF\Storage\SQL\Component\Order
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% ( 11/ 11)
-Projom\Storage\SQL\Component\Set
+JRF\Storage\SQL\Component\Set
   Methods: 100.00% (11/11)   Lines: 100.00% ( 33/ 33)
-Projom\Storage\SQL\Component\Table
+JRF\Storage\SQL\Component\Table
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% (  5/  5)
-Projom\Storage\SQL\Statement
+JRF\Storage\SQL\Statement
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% (  6/  6)
-Projom\Storage\SQL\Statement\Builder
+JRF\Storage\SQL\Statement\Builder
   Methods: 100.00% (24/24)   Lines: 100.00% (158/158)
-Projom\Storage\SQL\Statement\DTO
+JRF\Storage\SQL\Statement\DTO
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
-Projom\Storage\SQL\Statement\Delete
+JRF\Storage\SQL\Statement\Delete
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 17/ 17)
-Projom\Storage\SQL\Statement\Insert
+JRF\Storage\SQL\Statement\Insert
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 18/ 18)
-Projom\Storage\SQL\Statement\Select
+JRF\Storage\SQL\Statement\Select
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 30/ 30)
-Projom\Storage\SQL\Statement\Update
+JRF\Storage\SQL\Statement\Update
   Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 18/ 18)
-Projom\Storage\SQL\Util
+JRF\Storage\SQL\Util
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% (  9/  9)
-Projom\Storage\SQL\Util\Aggregate
+JRF\Storage\SQL\Util\Aggregate
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  5/  5)
-Projom\Storage\SQL\Util\Filter
+JRF\Storage\SQL\Util\Filter
   Methods: 100.00% (17/17)   Lines: 100.00% ( 20/ 20)
-Projom\Storage\SQL\Util\Join
+JRF\Storage\SQL\Util\Join
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
-Projom\Storage\SQL\Util\LogicalOperator
+JRF\Storage\SQL\Util\LogicalOperator
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
-Projom\Storage\SQL\Util\Operator
+JRF\Storage\SQL\Util\Operator
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
-Projom\Storage\SQL\Util\Sort
+JRF\Storage\SQL\Util\Sort
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
-Projom\Storage\Util
-  Methods: 100.00% (12/12)   Lines: 100.00% ( 31/ 31)
+JRF\Storage\Util
+  Methods: 100.00% (11/11)   Lines: 100.00% ( 21/ 21)

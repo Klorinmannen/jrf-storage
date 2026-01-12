@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Component;
+namespace JRF\Tests\Unit\Storage\SQL\Component;
 
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Component\Offset;
+use JRF\Storage\SQL\Component\Offset;
 
 class OffsetTest extends TestCase
 {

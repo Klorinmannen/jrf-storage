@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage;
+namespace JRF\Storage;
 
-use Projom\Storage\Query\Action;
-use Projom\Storage\Engine\Driver\DriverBase;
-use Projom\Storage\Engine\Driver\Config;
-use Projom\Storage\Engine\Driver\Driver;
-use Projom\Storage\Engine\Driver\DriverFactory;
-use Projom\Storage\Engine\Driver\Connection\ConnectionFactory;
+use JRF\Storage\Query\Action;
+use JRF\Storage\Engine\Driver\DriverBase;
+use JRF\Storage\Engine\Driver\Config;
+use JRF\Storage\Engine\Driver\Driver;
+use JRF\Storage\Engine\Driver\DriverFactory;
+use JRF\Storage\Engine\Driver\Connection\ConnectionFactory;
 
 class Engine
 {

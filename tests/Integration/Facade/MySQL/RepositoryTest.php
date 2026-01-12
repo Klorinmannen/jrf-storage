@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Integration\Facade\MySQL;
+namespace JRF\Tests\Integration\Facade\MySQL;
 
 include_once __DIR__ . '/../UserRepository.php';
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\Engine as EngineObject;
-use Projom\Storage\Facade\Engine;
-use Projom\Tests\Integration\Facade\UserRepository;
+use JRF\Storage\Engine as EngineObject;
+use JRF\Storage\Facade\Engine;
+use JRF\Storage\SQL\Util\Sort;
+use JRF\Tests\Integration\Facade\UserRepository;
 
 class RepositoryTest extends TestCase
 {
@@ -22,8 +23,8 @@ class RepositoryTest extends TestCase
 			'options' => [],
 			'connections' => [
 				[
-					'username' => 'projom',
-					'password' => 'projom',
+					'username' => 'JRF',
+					'password' => 'JRF',
 					'host' => 'localhost',
 					'port' => 3306,
 					'database' => 'Integration'
@@ -207,7 +208,7 @@ class RepositoryTest extends TestCase
 	#[Test]
 	public function paginate(): void
 	{
-		$userRecords = UserRepository::paginate(2, 2, ['Lastname' => 'Doe']);
+		$userRecords = UserRepository::paginate(2, 2, ['Lastname' => Sort::ASC], ['Lastname' => 'Doe']);
 		$this->assertCount(2, $userRecords);
 	}
 

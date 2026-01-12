@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Util;
+namespace JRF\Tests\Unit\Storage\SQL\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Util\Aggregate;
+use JRF\Storage\SQL\Util\Aggregate;
 
 class AggregateTest extends TestCase
 {

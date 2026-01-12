@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Unit\Storage\SQL\Util;
+namespace JRF\Tests\Unit\Storage\SQL\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\SQL\Util\Filter;
-use Projom\Storage\SQL\Util\LogicalOperator;
-use Projom\Storage\SQL\Util\Operator;
+use JRF\Storage\SQL\Util\Filter;
+use JRF\Storage\SQL\Util\LogicalOperator;
+use JRF\Storage\SQL\Util\Operator;
 
 class FilterTest extends TestCase
 {

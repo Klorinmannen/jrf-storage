@@ -2,34 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Facade\MySQL;
+namespace JRF\Storage\Facade\MySQL;
 
 use Exception;
 
-use Projom\Storage\Facade\MySQL\Query;
-use Projom\Storage\SQL\Util\Aggregate;
-use Projom\Storage\SQL\Util\Operator;
-use Projom\Storage\MySQL\Util;
+use JRF\Storage\Facade\MySQL\Query;
+use JRF\Storage\MySQL\Util;
+use JRF\Storage\SQL\Statement\Builder;
+use JRF\Storage\SQL\Util\Aggregate;
+use JRF\Storage\SQL\Util\Operator;
 
 /**
  * Static repository - a trait that provides a set of methods to interact with a database table.
- * 
- * How to use:
- * * Use this trait to create a query-able "repository" of the class using the trait.
- * * The name of the class using the trait should be the same as the database table name.
- *
- * Optional methods to implement for additional processing:
- * * formatFields(): array [ 'Field' => 'string', 'AnotherField' => 'int', ... ]
- * * redactFields(): array [ 'Field', 'AnotherField' ]
- * 
- * The value of all redacted fields will be replaced with the string "__REDACTED__".
  */
 trait Repository
 {
-	private const REDACTED = '__REDACTED__';
-
 	/**
-	 * Invoke / construct the repository.
+	 * Invoke the repository.
 	 */
 	private static function invoke(): string
 	{
@@ -123,74 +112,33 @@ trait Repository
 		return [];
 	}
 
+	/**
+	 * Returns whether to rekey the records with the primary field.
+	 * 
+	 * Default is false.
+	 */
+	public static function rekeyWithPrimaryField(): bool
+	{
+		return false;
+	}
+
 	private static function processRecords(array $records): array
 	{
-		$primaryField = static::primaryField();
-		$records = Util::rekey($records, $primaryField);
-
-		$processedRecords = [];
-		foreach ($records as $key => $record) {
-			$record = static::selectRecordFields($record);
-			$record = static::formatRecord($record);
-			$record = static::redactRecord($record);
-			$record = static::translateRecordFields($record);
-			$processedRecords[$key] = $record;
-		}
-
+		$options = static::processOptions();
+		$processedRecords = Util::processRecords($records, $options);
 		return $processedRecords;
 	}
 
-	private static function formatRecord(array $record): array
+	private static function processOptions(): array
 	{
-		if (!$formatFields = static::formatFields())
-			return $record;
-
-		foreach ($formatFields as $field => $type) {
-			if (!array_key_exists($field, $record))
-				continue;
-			$value = $record[$field];
-			$record[$field] = Util::format($value, $type);
-		}
-
-		return $record;
-	}
-
-	private static function redactRecord(array $record): array
-	{
-		if (!$redactedFields = static::redactFields())
-			return $record;
-
-		foreach ($redactedFields as $field)
-			if (array_key_exists($field, $record))
-				$record[$field] = static::REDACTED;
-
-		return $record;
-	}
-
-	private static function selectRecordFields(array $record): array
-	{
-		if (!$selectFields = static::selectFields())
-			return $record;
-
-		$modifiedRecord = [];
-		foreach ($selectFields as $field)
-			if (array_key_exists($field, $record))
-				$modifiedRecord[$field] = $record[$field];
-
-		return $modifiedRecord;
-	}
-
-	private static function translateRecordFields(array $record): array
-	{
-		if (!$translateFields = static::translateFields())
-			return $record;
-
-		$translatedRecord = [];
-		foreach ($translateFields as $field => $translatedField)
-			if (array_key_exists($field, $record))
-				$translatedRecord[$translatedField] = $record[$field];
-
-		return $translatedRecord;
+		$primaryField = static::rekeyWithPrimaryField() ? static::primaryField() : '';
+		return [
+			'select_fields' => static::selectFields(),
+			'format_fields' => static::formatFields(),
+			'redact_fields' => static::redactFields(),
+			'translate_fields' => static::translateFields(),
+			'rekey_with_primary_field' => $primaryField
+		];
 	}
 
 	/**
@@ -283,7 +231,7 @@ trait Repository
 	/**
 	 * Clone a record.
 	 * 
-	 * @param array $newRecord used to write new values to fields from the cloned record.
+	 * @param array $newRecord used to write new values to the new, cloned, record.
 	 * 
 	 * * Example use: User::clone($userID = 3)
 	 * * Example use: User::clone($userID = 3, ['Name' => 'New Name'])
@@ -390,25 +338,7 @@ trait Repository
 	 */
 	public static function count(string $countField = '*',  array $filters = [], array $groupByFields = []): null|array
 	{
-		$table = static::invoke();
-		$query = Query::build($table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::COUNT->buildSQL($countField, 'count');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return static::aggregate($countField, 'COUNT', $filters, $groupByFields);
 	}
 
 	/**
@@ -420,25 +350,7 @@ trait Repository
 	 */
 	public static function sum(string $sumField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$table = static::invoke();
-		$query = Query::build($table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::SUM->buildSQL($sumField, 'sum');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return static::aggregate($sumField, 'SUM', $filters, $groupByFields);
 	}
 
 	/**
@@ -450,25 +362,7 @@ trait Repository
 	 */
 	public static function avg(string $averageField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$table = static::invoke();
-		$query = Query::build($table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::AVG->buildSQL($averageField, 'avg');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return static::aggregate($averageField, 'AVG', $filters, $groupByFields);
 	}
 
 	/**
@@ -480,25 +374,7 @@ trait Repository
 	 */
 	public static function min(string $minField, array $filters = [], array $groupByFields = []): null|array
 	{
-		$table = static::invoke();
-		$query = Query::build($table);
-
-		if ($filters)
-			$query->filterOnFields($filters);
-
-		$aggregate = Aggregate::MIN->buildSQL($minField, 'min');
-		$fields = [$aggregate];
-
-		if ($groupByFields) {
-			$query->groupOn(...$groupByFields);
-			$fields = Util::merge($fields, $groupByFields);
-		}
-
-		$records = $query->select(...$fields);
-		if (!$records)
-			return null;
-
-		return $records;
+		return static::aggregate($minField, 'MIN', $filters, $groupByFields);
 	}
 
 	/**
@@ -510,13 +386,23 @@ trait Repository
 	 */
 	public static function max(string $maxField, array $filters = [], array $groupByFields = []): null|array
 	{
+		return static::aggregate($maxField, 'MAX', $filters, $groupByFields);
+	}
+
+	private static function aggregate(
+		string $field,
+		string $aggregate,
+		array $filters = [],
+		array $groupByFields = []
+	): null|array {
+
 		$table = static::invoke();
 		$query = Query::build($table);
 
 		if ($filters)
 			$query->filterOnFields($filters);
 
-		$aggregate = Aggregate::MAX->buildSQL($maxField, 'max');
+		$aggregate = Aggregate::from(strtoupper($aggregate))->buildSQL($field, strtolower($aggregate));
 		$fields = [$aggregate];
 
 		if ($groupByFields) {
@@ -534,23 +420,23 @@ trait Repository
 	/**
 	 * Paginate records.
 	 * 
-	 * * Example use: User::paginate(1, 10)
-	 * * Example use: User::paginate(1, 10, ['Name' => 'John'], ['Name' => Sort::ASC])
+	 * * Example use: User::paginate(1, 10, ['Name' => Sort::ASC])
+	 * * Example use: User::paginate(1, 10, ['Name' => Sort::ASC], ['Name' => 'John'])
 	 */
 	public static function paginate(
 		int $page,
 		int $pageSize,
+		array $sortOn,
 		array $filters = [],
-		array $sortOn = []
 	): null|array {
+
 		$table = static::invoke();
 		$query = Query::build($table);
 
+		$query->sortOn($sortOn);
+
 		if ($filters)
 			$query->filterOnFields($filters);
-
-		if ($sortOn)
-			$query->sortOn($sortOn);
 
 		$offset = ($page - 1) * $pageSize;
 		$query->offset($offset)->limit($pageSize);
@@ -562,5 +448,16 @@ trait Repository
 		$records = static::processRecords($records);
 
 		return $records;
+	}
+
+	/**
+	 * Build a query with the repository.
+	 * 
+	 * * Example use: User::query()->filterOn('Name', 'John')->select();
+	 */
+	public static function query(): Builder
+	{
+		$table = static::invoke();
+		return Query::build($table);
 	}
 }

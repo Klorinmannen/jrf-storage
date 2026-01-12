@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\SQL\Statement;
+namespace JRF\Storage\SQL\Statement;
 
 use Stringable;
 
-use Projom\Storage\SQL\Component\Set;
-use Projom\Storage\SQL\Component\Table;
-use Projom\Storage\SQL\Statement\StatementInterface;
-use Projom\Storage\SQL\Statement\DTO;
-use Projom\Storage\SQL\Util;
+use JRF\Storage\SQL\Component\Set;
+use JRF\Storage\SQL\Component\Table;
+use JRF\Storage\SQL\Statement\StatementInterface;
+use JRF\Storage\SQL\Statement\DTO;
+use JRF\Storage\SQL\Util;
 
 class Insert implements StatementInterface, Stringable
 {

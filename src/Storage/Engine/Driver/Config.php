@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Projom\Storage\Engine\Driver;
+namespace JRF\Storage\Engine\Driver;
 
-use Projom\Storage\Engine\Driver\Driver;
-use Projom\Storage\Engine\Driver\Connection\Config as ConnectionConfig;
+use JRF\Storage\Engine\Driver\Driver;
+use JRF\Storage\Engine\Driver\Connection\Config as ConnectionConfig;
 use Psr\Log\LoggerInterface;
 
 /**

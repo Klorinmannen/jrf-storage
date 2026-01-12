@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Integration\Facade\Query;
+namespace JRF\Tests\Integration\Facade\Query;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Storage\Engine as EngineObject;
-use Projom\Storage\Facade\Engine;
-use Projom\Storage\Facade\Query\DB;
-use Projom\Storage\Query\Action;
+use JRF\Storage\Engine as EngineObject;
+use JRF\Storage\Facade\Engine;
+use JRF\Storage\Facade\Query\DB;
+use JRF\Storage\Query\Action;
 
 class DBTest extends TestCase
 {
@@ -21,8 +21,8 @@ class DBTest extends TestCase
 			'options' => [],
 			'connections' => [
 				[
-					'username' => 'projom',
-					'password' => 'projom',
+					'username' => 'JRF',
+					'password' => 'JRF',
 					'host' => 'localhost',
 					'port' => 3306,
 					'database' => 'Integration'

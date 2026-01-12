@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Projom\Tests\Integration;
+namespace JRF\Tests\Integration;
 
-use Projom\Storage\Query\RecordInterface;
+use JRF\Storage\Query\RecordInterface;
 
 class UserRecord implements RecordInterface
 {
