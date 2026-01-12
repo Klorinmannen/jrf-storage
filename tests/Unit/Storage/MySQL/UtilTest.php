@@ -104,4 +104,240 @@ class UtilTest extends TestCase
 		$actual = Util::format($value, $type);
 		$this->assertEquals($expected, $actual);
 	}
+
+	public static function selectRecordFieldsProvider(): array
+	{
+		return [
+			'empty select fields' => [
+				['id' => 1, 'name' => 'John', 'email' => 'john@example.com'],
+				[],
+				['id' => 1, 'name' => 'John', 'email' => 'john@example.com']
+			],
+			'select single field' => [
+				['id' => 1, 'name' => 'John', 'email' => 'john@example.com'],
+				['name'],
+				['name' => 'John']
+			],
+			'select multiple fields' => [
+				['id' => 1, 'name' => 'John', 'email' => 'john@example.com'],
+				['id', 'name'],
+				['id' => 1, 'name' => 'John']
+			],
+			'select non-existent field' => [
+				['id' => 1, 'name' => 'John'],
+				['email'],
+				[]
+			],
+			'select mix of existing and non-existent fields' => [
+				['id' => 1, 'name' => 'John'],
+				['id', 'email', 'name'],
+				['id' => 1, 'name' => 'John']
+			],
+		];
+	}
+
+	#[Test]
+	#[DataProvider('selectRecordFieldsProvider')]
+	public function selectRecordFields(array $record, array $selectFields, array $expected): void
+	{
+		$result = Util::selectRecordFields($record, $selectFields);
+		$this->assertEquals($expected, $result);
+	}
+
+	public static function formatRecordProvider(): array
+	{
+		return [
+			'empty format fields' => [
+				['id' => '1', 'name' => 'John'],
+				[],
+				['id' => '1', 'name' => 'John']
+			],
+			'format single field to int' => [
+				['id' => '123', 'name' => 'John'],
+				['id' => 'int'],
+				['id' => 123, 'name' => 'John']
+			],
+			'format multiple fields' => [
+				['id' => '123', 'price' => '99.99', 'active' => '1'],
+				['id' => 'int', 'price' => 'float', 'active' => 'bool'],
+				['id' => 123, 'price' => 99.99, 'active' => true]
+			],
+			'format non-existent field' => [
+				['id' => 1, 'name' => 'John'],
+				['email' => 'string'],
+				['id' => 1, 'name' => 'John']
+			],
+			'format date field' => [
+				['created_at' => '2024-10-29 07:32:56'],
+				['created_at' => 'date'],
+				['created_at' => '2024-10-29']
+			],
+		];
+	}
+
+	#[Test]
+	#[DataProvider('formatRecordProvider')]
+	public function formatRecord(array $record, array $formatFields, array $expected): void
+	{
+		$result = Util::formatRecord($record, $formatFields);
+		$this->assertEquals($expected, $result);
+	}
+
+	public static function redactRecordProvider(): array
+	{
+		return [
+			'empty redact fields' => [
+				['id' => 1, 'password' => 'secret123'],
+				[],
+				'__REDACTED__',
+				['id' => 1, 'password' => 'secret123']
+			],
+			'redact single field' => [
+				['id' => 1, 'password' => 'secret123'],
+				['password'],
+				'__REDACTED__',
+				['id' => 1, 'password' => '__REDACTED__']
+			],
+			'redact multiple fields' => [
+				['id' => 1, 'password' => 'secret123', 'token' => 'abc123'],
+				['password', 'token'],
+				'__REDACTED__',
+				['id' => 1, 'password' => '__REDACTED__', 'token' => '__REDACTED__']
+			],
+			'redact non-existent field' => [
+				['id' => 1, 'name' => 'John'],
+				['password'],
+				'__REDACTED__',
+				['id' => 1, 'name' => 'John']
+			],
+			'custom redact text' => [
+				['id' => 1, 'password' => 'secret123'],
+				['password'],
+				'***HIDDEN***',
+				['id' => 1, 'password' => '***HIDDEN***']
+			],
+		];
+	}
+
+	#[Test]
+	#[DataProvider('redactRecordProvider')]
+	public function redactRecord(array $record, array $redactFields, string $redactText, array $expected): void
+	{
+		$result = Util::redactRecord($record, $redactFields, $redactText);
+		$this->assertEquals($expected, $result);
+	}
+
+	public static function translateRecordFieldsProvider(): array
+	{
+		return [
+			'empty translate fields' => [
+				['id' => 1, 'name' => 'John'],
+				[],
+				['id' => 1, 'name' => 'John']
+			],
+			'translate single field' => [
+				['id' => 1, 'name' => 'John'],
+				['id' => 'user_id'],
+				['user_id' => 1]
+			],
+			'translate multiple fields' => [
+				['id' => 1, 'name' => 'John', 'email' => 'john@example.com'],
+				['id' => 'user_id', 'name' => 'full_name'],
+				['user_id' => 1, 'full_name' => 'John']
+			],
+			'translate non-existent field' => [
+				['id' => 1, 'name' => 'John'],
+				['email' => 'user_email'],
+				[]
+			],
+			'translate mix of existing and non-existent fields' => [
+				['id' => 1, 'name' => 'John'],
+				['id' => 'user_id', 'email' => 'user_email', 'name' => 'full_name'],
+				['user_id' => 1, 'full_name' => 'John']
+			],
+		];
+	}
+
+	#[Test]
+	#[DataProvider('translateRecordFieldsProvider')]
+	public function translateRecordFields(array $record, array $translateFields, array $expected): void
+	{
+		$result = Util::translateRecordFields($record, $translateFields);
+		$this->assertEquals($expected, $result);
+	}
+
+	public static function processRecordsProvider(): array
+	{
+		return [
+			'empty records' => [
+				[],
+				[],
+				[]
+			],
+			'no options' => [
+				[['id' => 1, 'name' => 'John']],
+				[],
+				[['id' => 1, 'name' => 'John']]
+			],
+			'select fields only' => [
+				[['id' => 1, 'name' => 'John', 'email' => 'john@example.com']],
+				['select_fields' => ['id', 'name']],
+				[['id' => 1, 'name' => 'John']]
+			],
+			'format fields only' => [
+				[['id' => '123', 'price' => '99.99']],
+				['format_fields' => ['id' => 'int', 'price' => 'float']],
+				[['id' => 123, 'price' => 99.99]]
+			],
+			'redact fields only' => [
+				[['id' => 1, 'password' => 'secret123']],
+				['redact_fields' => ['password']],
+				[['id' => 1, 'password' => '__REDACTED__']]
+			],
+			'translate fields only' => [
+				[['id' => 1, 'name' => 'John']],
+				['translate_fields' => ['id' => 'user_id', 'name' => 'full_name']],
+				[['user_id' => 1, 'full_name' => 'John']]
+			],
+			'rekey with primary field' => [
+				[['id' => 1, 'name' => 'John'], ['id' => 2, 'name' => 'Jane']],
+				['rekey_with_primary_field' => 'id'],
+				[1 => ['id' => 1, 'name' => 'John'], 2 => ['id' => 2, 'name' => 'Jane']]
+			],
+			'multiple operations combined' => [
+				[['id' => '1', 'name' => 'John', 'email' => 'john@example.com', 'password' => 'secret']],
+				[
+					'select_fields' => ['id', 'name', 'password'],
+					'format_fields' => ['id' => 'int'],
+					'redact_fields' => ['password']
+				],
+				[['id' => 1, 'name' => 'John', 'password' => '__REDACTED__']]
+			],
+			'all operations combined' => [
+				[
+					['userID' => '1', 'username' => 'john', 'email' => 'john@example.com', 'password' => 'secret'],
+					['userID' => '2', 'username' => 'jane', 'email' => 'jane@example.com', 'password' => 'pass123']
+				],
+				[
+					'select_fields' => ['userID', 'username', 'password'],
+					'format_fields' => ['userID' => 'int'],
+					'redact_fields' => ['password'],
+					'translate_fields' => ['userID' => 'id', 'username' => 'name'],
+					'rekey_with_primary_field' => 'id'
+				],
+				[
+					1 => ['id' => 1, 'name' => 'john'],
+					2 => ['id' => 2, 'name' => 'jane']
+				]
+			],
+		];
+	}
+
+	#[Test]
+	#[DataProvider('processRecordsProvider')]
+	public function processRecords(array $records, array $options, array $expected): void
+	{
+		$result = Util::processRecords($records, $options);
+		$this->assertEquals($expected, $result);
+	}
 }
