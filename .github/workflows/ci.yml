@@ -10,9 +10,9 @@ permissions:
   contents: read # For actions/checkout@v4
 
 jobs:
-  Unit:
-    name: PHPUnit tests on ubuntu-latest
-    runs-on: [ubuntu-latest]
+  unit-tests:
+    name: Unit tests on ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -27,25 +27,25 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
 
-      - name: Run unit test coverage report
-        run: ./vendor/bin/phpunit --testsuite="Unit" --coverage-text="coverage_text.txt" --coverage-html="coverage_html"
+      - name: Run unit test coverage reports
+        run: ./vendor/bin/phpunit --testsuite="Unit"
 
-      - name: Send coverage report to step summary
-        run: cat coverage_text.txt >> $GITHUB_STEP_SUMMARY
+      - name: Send text coverage report to step summary
+        run: cat coverage.txt >> $GITHUB_STEP_SUMMARY
 
-      - name: Create archive for coverage html
-        run: tar -czvf coverage_html.tar.gz coverage_html
+      - name: Create archive for html coverage
+        run: tar -czvf html-coverage.tar.gz html-coverage
 
       - name: Upload coverage html archive
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-html
+          name: html-coverage
           overwrite: true
-          path: ./coverage_html.tar.gz
+          path: ./html-coverage.tar.gz
 
-  Integration:
+  integration-tests:
     name: Integration tests on ubuntu-latest
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -79,7 +79,7 @@ jobs:
       - name: Run integration test suite
         run: ./vendor/bin/phpunit --testsuite="Integration"
 
-  Psalm:
+  code-security-analysis:
     name: Psalm static security analysis on ubuntu-latest
     runs-on: ubuntu-latest
     permissions:
