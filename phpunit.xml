@@ -29,7 +29,7 @@
   </source>
   <coverage>
     <report>
-      <clover outputFile="clover.xml" />
+      <clover outputFile="clover-coverage.xml" />
       <html outputDirectory="html-coverage" />
       <text outputFile="coverage.txt" />
     </report>
