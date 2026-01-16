@@ -1,7 +1,7 @@
 {
     "name": "klorinmannen/jrf-storage",
     "description": "Data storage access library",
-    "homepage": "https://github.com/klorinmannen/jrf-storage",    
+    "homepage": "https://github.com/klorinmannen/jrf-storage",
     "type": "library",
     "license": "MIT",
     "keywords": [
