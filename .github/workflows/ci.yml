@@ -43,6 +43,14 @@ jobs:
           overwrite: true
           path: ./html-coverage.tar.gz
 
+      - name: Create coverage badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          report: ./clover-coverage.xml
+          coverage_badge_path: phpunit-coverage-badge.svg
+          push_badge: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
   integration-tests:
     name: Integration tests on ubuntu-latest
     runs-on: ubuntu-latest
