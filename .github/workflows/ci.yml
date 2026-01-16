@@ -50,6 +50,8 @@ jobs:
           coverage_badge_path: phpunit-coverage-badge.svg
           push_badge: true
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
 
   integration-tests:
     name: Integration tests on ubuntu-latest
