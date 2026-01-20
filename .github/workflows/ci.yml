@@ -18,7 +18,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: mbstring
           coverage: xdebug
 
@@ -61,7 +61,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: mbstring, pdo_mysql, pdo_sqlite
           coverage: xdebug
 
@@ -98,7 +98,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
 
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
@@ -115,7 +115,7 @@ jobs:
       - name: Psalm annotation and report
         run: ./vendor/bin/psalm --output-format=github --report=ql-results.sarif
 
-      - name: Upload annotation and report
+      - name: Upload report
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: ql-results.sarif
