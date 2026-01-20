@@ -86,32 +86,11 @@ jobs:
       - name: Run integration test suite
         run: ./vendor/bin/phpunit --testsuite="Integration"
 
-  code-security-analysis:
-    name: Psalm security analysis on ubuntu-latest
+  code-analysis:
+    name: Psalm code analysis on ubuntu-latest
     runs-on: ubuntu-latest
     permissions:
       security-events: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Psalm security scan
-        uses: docker://ghcr.io/psalm/psalm-github-actions
-        with:
-          security_analysis: true
-          show_info: true
-          report_file: results.sarif
-        continue-on-error: true
-
-      - name: Upload security analysis results
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: results.sarif
-          category: psalm-security-analysis
-
-  psalm-annotations:
-    name: Psalm code quality on ubuntu-latest
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -120,10 +99,24 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-          tools: psalm
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --no-interaction --no-progress
 
-      - name: Psalm annotations
-        run: ./vendor/bin/psalm --output-format=github
+      - name: Psalm security & taint scan
+        run: ./vendor/bin/psalm --taint-analysis --output-format=sarif > taint-results.sarif
+
+      - name: Upload security analysis results
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: taint-results.sarif
+          category: psalm-taint-analysis
+
+      - name: Psalm annotation and report
+        run: ./vendor/bin/psalm --output-format=github --report=ql-results.sarif
+
+      - name: Upload annotation and report
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: ql-results.sarif
+          category: psalm-report
