@@ -6,13 +6,12 @@ on:
   schedule:
     - cron: "0 4 * * 3" # Every Wednesday at 4:00 UTC
 
-permissions:
-  contents: write
-
 jobs:
   unit-tests:
     name: Unit tests on ubuntu-latest
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
