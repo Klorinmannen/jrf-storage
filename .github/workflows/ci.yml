@@ -87,7 +87,7 @@ jobs:
         run: ./vendor/bin/phpunit --testsuite="Integration"
 
   code-security-analysis:
-    name: Psalm static security analysis on ubuntu-latest
+    name: Psalm security analysis on ubuntu-latest
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -107,12 +107,11 @@ jobs:
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: results.sarif
+          category: psalm-security-analysis
 
   psalm-annotations:
-    name: Psalm static analysis on ubuntu-latest
+    name: Psalm code quality on ubuntu-latest
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
