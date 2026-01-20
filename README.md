@@ -1,11 +1,13 @@
 # JRF data storage access library
-[![PHP version support][php-version-badge]][php]
-[![PHPUnit][phpunit-ci-badge]][phpunit-action]
+[![PHP version support][php-version-badge]][php-version]
+[![CI][ci-badge]][workflow-actions]
+[![PHPUnit][phpunit-coverage-badge]][workflow-actions]
 
 [php-version-badge]: https://img.shields.io/badge/php-%5E8.2-7A86B8
-[php]: https://www.php.net/supported-versions.php
-[phpunit-action]: https://github.com/Klorinmannen/jrf-storage/actions
-[phpunit-ci-badge]: https://github.com/Klorinmannen/jrf-storage/workflows/PHPUnit/badge.svg
+[php-version]: https://www.php.net/supported-versions.php
+[ci-badge]: https://github.com/Klorinmannen/jrf-storage/workflows/CI/badge.svg
+[workflow-actions]: https://github.com/Klorinmannen/jrf-storage/actions
+[phpunit-coverage-badge]: ./phpunit-coverage-badge.svg
 
 ### Project goals
 * Accessing data stores with a simple interface.

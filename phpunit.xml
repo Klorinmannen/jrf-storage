@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd" 
-         bootstrap="vendor/autoload.php" 
-         cacheDirectory=".phpunit.cache" 
-         executionOrder="depends,defects" 
-         requireCoverageMetadata="false" 
-         beStrictAboutCoverageMetadata="false" 
-         beStrictAboutOutputDuringTests="true" 
-         failOnRisky="true" 
-         failOnWarning="true" 
-         displayDetailsOnTestsThatTriggerDeprecations="true" 
-         displayDetailsOnTestsThatTriggerErrors="true" 
-         displayDetailsOnTestsThatTriggerNotices="true" 
-         displayDetailsOnTestsThatTriggerWarnings="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd"
+  bootstrap="vendor/autoload.php"
+  executionOrder="depends,defects"
+  requireCoverageMetadata="false"
+  beStrictAboutCoverageMetadata="false"
+  beStrictAboutOutputDuringTests="true"
+  failOnRisky="true"
+  failOnWarning="true"
+  failOnNotice="true"
+  displayDetailsOnTestsThatTriggerDeprecations="true"
+  displayDetailsOnTestsThatTriggerErrors="true"
+  displayDetailsOnTestsThatTriggerNotices="true"
+  displayDetailsOnTestsThatTriggerWarnings="true"
+  cacheResult="false">
   <testsuites>
     <testsuite name="Unit">
       <directory>tests/Unit</directory>
@@ -26,4 +27,11 @@
       <directory>src</directory>
     </include>
   </source>
+  <coverage>
+    <report>
+      <clover outputFile="clover-coverage.xml" />
+      <html outputDirectory="html-coverage" />
+      <text outputFile="coverage.txt" />
+    </report>
+  </coverage>
 </phpunit>
