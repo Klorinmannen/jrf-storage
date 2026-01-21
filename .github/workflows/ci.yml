@@ -113,7 +113,7 @@ jobs:
           category: psalm-taint-analysis
 
   code-static-analysis:
-    name: Psalm annotations & report on ubuntu-latest
+    name: Psalm static analysis on ubuntu-latest
     runs-on: ubuntu-latest
     permissions:
       security-events: write
