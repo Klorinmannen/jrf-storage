@@ -18,10 +18,9 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: mbstring
           coverage: xdebug
-          tools: composer
 
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
@@ -62,10 +61,9 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: mbstring, pdo_mysql, pdo_sqlite
           coverage: xdebug
-          tools: composer
 
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
@@ -89,24 +87,54 @@ jobs:
         run: ./vendor/bin/phpunit --testsuite="Integration"
 
   code-security-analysis:
-    name: Psalm static security analysis on ubuntu-latest
+    name: Psalm taint analysis on ubuntu-latest
     runs-on: ubuntu-latest
     permissions:
-      security-events: write # For github/codeql-action/upload-sarif to upload results
-
+      security-events: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Psalm security scan
-        uses: docker://ghcr.io/psalm/psalm-github-actions
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          security_analysis: true
-          show_info: true
-          report_file: results.sarif
-        continue-on-error: true
+          php-version: "8.4"
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Psalm taint analysis scan
+        run: ./vendor/bin/psalm --taint-analysis --output-format=sarif > taint-results.sarif
 
       - name: Upload security analysis results
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: results.sarif
+          sarif_file: taint-results.sarif
+          category: psalm-taint-analysis
+
+  code-static-analysis:
+    name: Psalm static analysis on ubuntu-latest
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Psalm annotation and report
+        continue-on-error: true
+        run: ./vendor/bin/psalm --output-format=github --report=ql-results.sarif
+
+      - name: Upload report
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: ql-results.sarif
+          category: psalm-report
