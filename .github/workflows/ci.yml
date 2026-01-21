@@ -86,8 +86,8 @@ jobs:
       - name: Run integration test suite
         run: ./vendor/bin/phpunit --testsuite="Integration"
 
-  code-analysis:
-    name: Psalm code analysis on ubuntu-latest
+  code-security-analysis:
+    name: Psalm taint analysis on ubuntu-latest
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -103,7 +103,7 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
 
-      - name: Psalm security & taint scan
+      - name: Psalm taint analysis scan
         run: ./vendor/bin/psalm --taint-analysis --output-format=sarif > taint-results.sarif
 
       - name: Upload security analysis results
@@ -111,6 +111,23 @@ jobs:
         with:
           sarif_file: taint-results.sarif
           category: psalm-taint-analysis
+
+  code-static-analysis:
+    name: Psalm annotations & report on ubuntu-latest
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
 
       - name: Psalm annotation and report
         continue-on-error: true
