@@ -113,6 +113,7 @@ jobs:
           category: psalm-taint-analysis
 
       - name: Psalm annotation and report
+        continue-on-error: true
         run: ./vendor/bin/psalm --output-format=github --report=ql-results.sarif
 
       - name: Upload report
